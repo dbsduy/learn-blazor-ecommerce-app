@@ -1,0 +1,18 @@
+﻿@using ECommerceApp.Data
+<!-- Start Column 1 -->
+<div class="col-12 col-md-4 col-lg-3 mb-5">
+    <a class="product-item bg-white rounded-4" href="/product/@Product.Id" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; border-radius: 10px">
+        <img src="@Product.Image" class="img-fluid product-thumbnail w-100" style="height: 400px; object-fit: contain" loading="lazy">
+        <h3 class="product-title">@Product.Title</h3>
+        <strong class="product-price">$@Product.Price</strong>
+
+        <span class="icon-cross">
+            <img src="images/cross.svg" class="img-fluid">
+        </span>
+    </a>
+</div>
+<!-- End Column 1 -->
+@code {
+    [Parameter]
+    public IProduct Product { get; set; }
+}

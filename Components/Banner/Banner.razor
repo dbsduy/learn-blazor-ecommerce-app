@@ -1,0 +1,44 @@
+﻿@using ECommerceApp.Components.Buttons
+@using ECommerceApp.Data
+@using ECommerceApp.Services
+
+@inject IProductApi ProductApi
+
+@if (BannerProduct != null)
+{
+    <div class="hero">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <div class="intro-excerpt">
+                        <h1>@BannerProduct.Title</h1>
+                        <p class="mb-4">@BannerProduct.Description</p>
+                        <div>
+                            <Button Label="Shop Now" ButtonType="Secondary" />
+                            <Button Label="Explore" ButtonType="WhiteOutline" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="hero-img-wrap h-100 w-100">
+                        <img src="@BannerProduct.Image" class="img-fluid  w-100 h-100" style="object-fit: cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+
+    private IProduct BannerProduct;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var product = await ProductApi.GetSingleProduct(10);
+        BannerProduct = product;
+    }
+
+}

@@ -1,0 +1,27 @@
+﻿<button class="btn @GetButtonClass() me-2">@Label</button>
+
+@code {
+
+    [Parameter] public string Label { get; set; }
+    [Parameter] public string ButtonType { get; set; }
+
+    private string GetButtonClass()
+    {
+        return ButtonType switch
+        {
+            "Danger" => "btn-danger",
+            "Primary" => "btn-primary",
+            "Success" => "btn-success",
+            "Warning" => "btn-warning",
+            "Info" => "btn-info",
+            "Light" => "btn-light",
+            "Dark" => "btn-dark",
+            "Secondary" => "btn-secondary",
+            "WhiteOutline" => "btn-outline-white",
+            _ => "btn-secondary"
+        };
+    }
+
+
+
+}
