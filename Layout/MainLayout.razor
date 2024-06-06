@@ -1,8 +1,17 @@
-﻿@inherits LayoutComponentBase
+﻿@using ECommerceApp.Components.Login
+@using Microsoft.AspNetCore.Components.Authorization
+@inherits LayoutComponentBase
 
 <NavMenu />
 <div style="min-height: 80vh">
-    @Body
+    <AuthorizeView>
+        <Authorized>
+            @Body
+        </Authorized>
+        <NotAuthorized>
+            <Login />
+        </NotAuthorized>
+    </AuthorizeView>
 </div>
 <Footer />
 

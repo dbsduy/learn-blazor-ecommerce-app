@@ -36,7 +36,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var product = await ProductApi.GetSingleProduct(10);
+        var random = new Random();
+        int randomProductId = random.Next(1, 21);
+        var product = await ProductApi.GetSingleProduct(randomProductId);
         BannerProduct = product;
     }
 

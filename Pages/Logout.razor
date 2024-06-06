@@ -1,0 +1,14 @@
+﻿@page "/logout"
+@using ECommerceApp.Services
+
+
+@inject IAuthApi AuthApi
+@inject NavigationManager NavigationManager
+
+@code {
+    protected async override Task OnInitializedAsync()
+    {
+        await AuthApi.Logout();
+        NavigationManager.NavigateTo("/");
+    }
+}
