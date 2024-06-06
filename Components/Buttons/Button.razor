@@ -1,9 +1,10 @@
-﻿<button class="btn @GetButtonClass() me-2">@Label</button>
+﻿<button class="btn @GetButtonClass() me-2" onclick="@OnClick">@Label</button>
 
 @code {
 
     [Parameter] public string Label { get; set; }
     [Parameter] public string ButtonType { get; set; }
+    [Parameter] public EventCallback OnClick { get; set; }
 
     private string GetButtonClass()
     {

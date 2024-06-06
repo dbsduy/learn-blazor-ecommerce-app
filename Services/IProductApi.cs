@@ -12,5 +12,7 @@ namespace ECommerceApp.Services
 
 
         Task<IEnumerable<ICategory>> GetAllCategories();
+
+        Task<IEnumerable<IProduct>> GetProductWithLimit(int limit);
     }
 }

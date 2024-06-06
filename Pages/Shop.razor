@@ -8,6 +8,9 @@
 
 @inject IProductApi ProductAoi
 
+
+<Breadcrumb BreadcrumbPath="@BreadcrumbValue" />
+
 <div class="untree_co-section product-section before-footer-section">
     <ProductFilter OnFilter="EventCallback.Factory.Create<(string, string)>(this, FilterProducts)" />
     <div class="container">

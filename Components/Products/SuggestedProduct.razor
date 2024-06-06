@@ -1,0 +1,31 @@
+﻿@using ECommerceApp.Data
+@using ECommerceApp.Interfaces
+@using ECommerceApp.Services
+
+@inject IProductApi ProductApi
+
+<div class="product-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+                <h2 class="mb-4 section-title">Crafted with excellent material.</h2>
+                <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. </p>
+                <p><a href="/shop" class="btn">Explore</a></p>
+            </div>
+            @foreach (var item in Products)
+            {
+                <ProductCard Product="@item" />
+            }
+        </div>
+    </div>
+</div>
+@code {
+
+
+    IEnumerable<IProduct> Products { get; set; } = new List<IProduct>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Products = await ProductApi.GetProductWithLimit(3);
+    }
+}

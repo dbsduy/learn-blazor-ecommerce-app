@@ -3,6 +3,7 @@
 @using ECommerceApp.Services
 
 @inject IProductApi ProductApi
+@inject NavigationManager NavigationManager
 
 @if (BannerProduct != null)
 {
@@ -14,8 +15,8 @@
                         <h1>@BannerProduct.Title</h1>
                         <p class="mb-4">@BannerProduct.Description</p>
                         <div>
-                            <Button Label="Shop Now" ButtonType="Secondary" />
-                            <Button Label="Explore" ButtonType="WhiteOutline" />
+                            <Button Label="Shop Now" ButtonType="Secondary" OnClick="@NavigateToShop" />
+                            <a href="/product/@BannerProduct.Id" class="btn btn-outline-white me-2">Explore</a>
                         </div>
                     </div>
                 </div>
@@ -38,5 +39,12 @@
         var product = await ProductApi.GetSingleProduct(10);
         BannerProduct = product;
     }
+
+    private void NavigateToShop()
+    {
+        NavigationManager.NavigateTo("/shop");
+    }
+
+
 
 }

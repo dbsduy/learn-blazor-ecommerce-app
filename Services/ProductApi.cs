@@ -17,17 +17,6 @@ namespace ECommerceApp.Services
             return await _httpClient.GetFromJsonAsync<IProduct>($"/products/{id}");
         }
 
-        //public async Task<IEnumerable<IProduct>> GetAllProducts(string? categoryType = null, string? sortType = null)
-        //{
-
-        //    if (!string.IsNullOrEmpty(categoryType))
-        //    {
-        //        return await _httpClient.GetFromJsonAsync<List<IProduct>>($"/products/category/{categoryType}");
-        //    }
-
-        //    return await _httpClient.GetFromJsonAsync<List<IProduct>>("/products");
-        //}
-
         public async Task<IEnumerable<IProduct>> GetAllProducts(string? categoryType = null, string? sortType = null)
         {
             List<IProduct> products;
@@ -70,6 +59,11 @@ namespace ECommerceApp.Services
             return data;
         }
 
+        public async Task<IEnumerable<IProduct>> GetProductWithLimit(int limit)
+        {
+            var products = await _httpClient.GetFromJsonAsync<List<IProduct>>($"/products?limit={limit}");
+            return products;
+        }
     }
 }
 

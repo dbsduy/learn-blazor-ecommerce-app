@@ -1,5 +1,7 @@
 ﻿@using Blazored.LocalStorage
 @using ECommerceApp.Components.Banner
+@using ECommerceApp.Components.Products
+@using ECommerceApp.Components.Templates
 @using Microsoft.AspNetCore.Components.Authorization
 @page "/"
 
@@ -7,9 +9,11 @@
 
 @inject ILocalStorageService localStorage
 
+<PageTitle>Home Page</PageTitle>
 <Banner />
-
 <p>Token: @token</p>
+<SuggestedProduct />
+<HomePageTemplate />
 
 @code {
     private string token;
