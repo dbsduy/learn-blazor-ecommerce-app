@@ -1,5 +1,21 @@
-﻿@using ECommerceApp.Components.Banner
-
+﻿@using Blazored.LocalStorage
+@using ECommerceApp.Components.Banner
+@using Microsoft.AspNetCore.Components.Authorization
 @page "/"
 
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@inject ILocalStorageService localStorage
+
 <Banner />
+
+<p>Token: @token</p>
+
+@code {
+    private string token;
+
+    protected override async Task OnInitializedAsync()
+    {
+        token = await localStorage.GetItemAsync<string>("authToken");
+    }
+}
