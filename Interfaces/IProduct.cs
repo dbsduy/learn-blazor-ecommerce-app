@@ -17,4 +17,10 @@
         public double Rate { get; set; }
         public int Count { get; set; }
     }
+
+    public class ICategory
+    {
+        public string Name { get; set; }
+        public string Image { get; set; }
+    }
 }

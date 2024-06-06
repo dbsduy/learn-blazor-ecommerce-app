@@ -1,8 +1,10 @@
 ﻿@page "/product/{Id}"
 @using ECommerceApp.Data
+@using ECommerceApp.Interfaces
 @using ECommerceApp.Services
 
 @inject IProductApi ProductApi
+@inject ICartApi CartApi
 
 <div style="background:#3b5d50;" class="mt-3 py-1 px-5"><a class="w-100 py-4 text-white" style="color: white; text-decoration: none" href="/Shop">Back to Shop</a></div>
 @if (ProductDetails != null)
@@ -16,7 +18,7 @@
                 <h2>@ProductDetails.Title</h2>
                 <h4>$ @ProductDetails.Price</h4>
                 <p>@ProductDetails.Description</p>
-                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                <button class="btn btn-primary" onclick="@AddToCart">Add to Cart</button>
 
             </div>
         </div>
@@ -27,10 +29,27 @@
     [Parameter]
     public string Id { get; set; }
     private IProduct ProductDetails;
+    public IProductInCart ProductInCart;
+
 
     protected override async Task OnInitializedAsync()
     {
         ProductDetails = await ProductApi.GetSingleProduct(Int32.Parse(Id));
+    }
+
+
+    private async Task AddToCart()
+    {
+        ProductInCart = new IProductInCart
+            {
+                ProductId = ProductDetails.Id,
+                Quantity = 1,
+                Price = ProductDetails.Price,
+                ProductName = ProductDetails.Title,
+                Image = ProductDetails.Image
+            };
+
+        await CartApi.AddToCart(ProductInCart);
     }
 
 

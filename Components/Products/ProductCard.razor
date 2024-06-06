@@ -1,4 +1,8 @@
 ﻿@using ECommerceApp.Data
+@using ECommerceApp.Interfaces
+@using ECommerceApp.Services
+
+@inject ICartApi CartApi
 <!-- Start Column 1 -->
 <div class="col-12 col-md-4 col-lg-3 mb-5">
     <a class="product-item bg-white rounded-4" href="/product/@Product.Id" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; border-radius: 10px">
@@ -6,7 +10,7 @@
         <h3 class="product-title">@Product.Title</h3>
         <strong class="product-price">$@Product.Price</strong>
 
-        <span class="icon-cross">
+        <span class="icon-cross" onclick="@AddToCart">
             <img src="images/cross.svg" class="img-fluid">
         </span>
     </a>
@@ -15,4 +19,20 @@
 @code {
     [Parameter]
     public IProduct Product { get; set; }
+
+    public IProductInCart ProductInCart;
+
+    private async Task AddToCart()
+    {
+        ProductInCart = new IProductInCart
+            {
+                ProductId = Product.Id,
+                Quantity = 1,
+                Price = Product.Price,
+                ProductName = Product.Title,
+                Image = Product.Image
+            };
+
+        await CartApi.AddToCart(ProductInCart);
+    }
 }

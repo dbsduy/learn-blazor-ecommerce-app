@@ -1,15 +1,15 @@
 ﻿@page "/shop"
 
 @using ECommerceApp.Components.Breadcrumbs
+@using ECommerceApp.Components.Filters
 @using ECommerceApp.Components.Products
 @using ECommerceApp.Data
 @using ECommerceApp.Services
 
 @inject IProductApi ProductAoi
 
-<Breadcrumb BreadcrumbPath="@BreadcrumbValue" />
-
 <div class="untree_co-section product-section before-footer-section">
+    <ProductFilter OnFilter="EventCallback.Factory.Create<(string, string)>(this, FilterProducts)" />
     <div class="container">
         <div class="row">
             @foreach (var product in Products)
@@ -21,13 +21,23 @@
 </div>
 
 @code {
-
     private List<string> BreadcrumbValue { get; set; } = new List<string> { "Home", "Shop" };
 
     private IEnumerable<IProduct> Products { get; set; } = new List<IProduct>();
 
     protected override async Task OnInitializedAsync()
     {
-        Products = await ProductAoi.GetAllProducts();
+        await OnLoad();
+    }
+
+    private async Task OnLoad(string? filterType = null, string? sortType = null)
+    {
+        Products = await ProductAoi.GetAllProducts(filterType, sortType);
+        StateHasChanged();
+    }
+
+    private async Task FilterProducts((string type, string sort) filter)
+    {
+        await OnLoad(filter.type, filter.sort);
     }
 }

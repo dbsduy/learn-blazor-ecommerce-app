@@ -8,7 +8,9 @@ namespace ECommerceApp.Services
         Task<IProduct> GetSingleProduct(int id);
 
         //** Get all products
-        Task<IEnumerable<IProduct>> GetAllProducts();
+        Task<IEnumerable<IProduct>> GetAllProducts(string? categoryType = null, string? sortType = null);
 
+
+        Task<IEnumerable<ICategory>> GetAllCategories();
     }
 }
