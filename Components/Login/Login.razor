@@ -40,7 +40,14 @@
                                     </div>
 
                                     <div class="pt-1 mb-4">
-                                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                                        @if (isLoading)
+                                        {
+                                            <span>Loading....</span>
+                                        }
+                                        else
+                                        {
+                                            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                                        }
                                     </div>
                                 </EditForm>
                             </div>
@@ -59,10 +66,12 @@
             Password = "83r5^_"
         };
 
+    private bool isLoading = false;
     private async Task OnSubmit()
     {
+        isLoading = true;
         var result = await AuthApi.Login(Model);
-
+        isLoading = false;
         if (result != null)
         {
             NavigationManager.NavigateTo("/");

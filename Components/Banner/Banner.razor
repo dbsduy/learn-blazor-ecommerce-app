@@ -1,10 +1,15 @@
 ﻿@using ECommerceApp.Components.Buttons
+@using ECommerceApp.Components.Loading
 @using ECommerceApp.Data
 @using ECommerceApp.Services
 
 @inject IProductApi ProductApi
 @inject NavigationManager NavigationManager
 
+@if (isLoading)
+{
+    <Spinner />
+}
 @if (BannerProduct != null)
 {
     <div class="hero">
@@ -33,13 +38,16 @@
 @code {
 
     private IProduct BannerProduct;
+    private bool isLoading = false;
 
     protected override async Task OnInitializedAsync()
     {
+        isLoading = true;
         var random = new Random();
         int randomProductId = random.Next(1, 21);
         var product = await ProductApi.GetSingleProduct(randomProductId);
         BannerProduct = product;
+        isLoading = false;
     }
 
     private void NavigateToShop()

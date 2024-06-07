@@ -2,6 +2,7 @@
 
 @using ECommerceApp.Components.Breadcrumbs
 @using ECommerceApp.Components.Filters
+@using ECommerceApp.Components.Loading
 @using ECommerceApp.Components.Products
 @using ECommerceApp.Data
 @using ECommerceApp.Services
@@ -14,18 +15,27 @@
 <div class="untree_co-section product-section before-footer-section">
     <ProductFilter OnFilter="EventCallback.Factory.Create<(string, string)>(this, FilterProducts)" />
     <div class="container">
-        <div class="row">
-            @foreach (var product in Products)
-            {
-                <ProductCard Product="@product" />
-            }
-        </div>
+        @if (isLoading)
+        {
+            <Spinner />
+        }
+        else
+        {
+            <div class="row">
+
+                @foreach (var product in Products)
+                {
+                    <ProductCard Product="@product" />
+                }
+            </div>
+        }
+
     </div>
 </div>
 
 @code {
     private List<string> BreadcrumbValue { get; set; } = new List<string> { "Home", "Shop" };
-
+    private bool isLoading = false;
     private IEnumerable<IProduct> Products { get; set; } = new List<IProduct>();
 
     protected override async Task OnInitializedAsync()
@@ -35,7 +45,9 @@
 
     private async Task OnLoad(string? filterType = null, string? sortType = null)
     {
+        isLoading = true;
         Products = await ProductAoi.GetAllProducts(filterType, sortType);
+        isLoading = false;
         StateHasChanged();
     }
 
